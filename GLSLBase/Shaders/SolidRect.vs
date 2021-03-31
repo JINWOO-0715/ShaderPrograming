@@ -29,7 +29,7 @@ void main()
 	{
 		newTime = mod(newTime, a_LifeTime);
 		nesPos = nesPos + vec3(newTime,0,0);
-		nesPos.y  =nesPos.y + a_A * sin(newTime*3.14*2*a_P);
+		nesPos.y  =nesPos.y + (a_A *newTime)* sin(newTime*3.14*2*a_P);
 		//float t = newTime;
 		//float tt = newTime *newTime;	
 		//nesPos = nesPos+ t *a_Velocity + 0.5 * c_Gravity * tt;
