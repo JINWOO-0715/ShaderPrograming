@@ -135,7 +135,7 @@ void Renderer::CreateParticle(int count)
 	int vertexCount = count * 3 * 2;// drawarrys arg 중 vertex count에 넣어주기위해 미리 계산
 
 	int index = 0;
-	float particleSize = 0.01f;
+	float particleSize = 0.1f;
 
 	for (int i = 0; i < count; i++)
 	{
@@ -143,24 +143,24 @@ void Renderer::CreateParticle(int count)
 		float randomValueY = 0.f;
 		float randomValueZ = 0.f;
 
-		float randomValueVX = 0.f;
+		float randomValueVX = 1.f;
 		float randomValueVY = 0.f;
 		float randomValueVZ = 0.f;
 
 		float randomEmitTime = 0.f;
-		float randomLifeTime = 0.f;
+		float randomLifeTime = 1.f;
 
 
-		randomValueX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
-		randomValueY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
-		randomValueZ = 0.f;
+		//randomValueX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		//randomValueY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
+		//randomValueZ = 0.f;
 
-		randomValueVX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
-		randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
-		randomValueVZ = 0.f;
+		//randomValueVX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
+		//randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
+		//randomValueVZ = 0.f;
 
-		randomEmitTime = ((float)rand() / (float)RAND_MAX) * 10.f;
-		randomLifeTime = ((float)rand() / (float)RAND_MAX) * 10.f; //0~10;
+		//randomEmitTime = ((float)rand() / (float)RAND_MAX) * 10.f;
+		//randomLifeTime = ((float)rand() / (float)RAND_MAX) * 10.f; //0~10;
 
 		//V0
 		particlevertices[index] = -particleSize / 2.f + randomValueX;
