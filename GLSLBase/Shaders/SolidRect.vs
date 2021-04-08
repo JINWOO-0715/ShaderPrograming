@@ -14,27 +14,32 @@ uniform float u_Time; //누적시간
 
 //const vec3 c_Gravity = vec3(0, -2.8, 0);
 const vec3 c_Gravity = vec3(0, 0, 0);
+const mat3 c_NV = mat3(0,-1,0,1,0,0,0,0,0);
 void main()
 {
 
 	float newTime =u_Time - a_EmitTime;
 	// 반복하는거
 
-	vec3 nesPos = a_Position;
+	vec3 newPos = a_Position;
 	if(newTime <0.0)
 	{
-		nesPos = vec3(10000,10000,10000);
+		newPos = vec3(10000,10000,10000);
 	}
 	else
 	{
-		newTime = mod(newTime, a_LifeTime);
-		nesPos = nesPos + vec3(newTime,0,0);
-		nesPos.y  =nesPos.y + (a_A *newTime)* sin(newTime*3.14*2*a_P);
-		//float t = newTime;
-		//float tt = newTime *newTime;	
-		//nesPos = nesPos+ t *a_Velocity + 0.5 * c_Gravity * tt;
+		/*newTime = mod(newTime, a_LifeTime);
+		newPos = newPos + vec3(newTime,0,0);
+		newPos.y  =newPos.y + (a_A *newTime)* sin(newTime * 3.14 * 2 * a_P);
+		*/
+		float t = newTime;
+		float tt = newTime * newTime;	
+		vec3 currVel = a_Velocity + t *c_Gravity;
+		vec3 normalV= normalize(currVel * c_NV);
+		newPos = newPos+ t *a_Velocity + 0.5 * c_Gravity * tt;
+		newPos =newPos + normalV * a_A*sin(newTime * 2 * 3.14 * a_P);
 	}
 
 
-	gl_Position = vec4(nesPos, 1); // GL고유의값
+	gl_Position = vec4(newPos, 1); // GL고유의값
 }
