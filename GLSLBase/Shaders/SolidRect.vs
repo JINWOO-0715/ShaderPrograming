@@ -25,6 +25,10 @@ void main()
 	newPos.x = a_Position.x + cos(a_RandValue * 2 * 3.14);
 	newPos.y = a_Position.y + sin(a_RandValue * 2 * 3.14);
 
+	newPos.x = a_Position.x + (16*pow(sin(a_RandValue*2 * 3.14),3))*0.03;
+	newPos.y = a_Position.y + (13*cos(a_RandValue*2 * 3.14)-5 * cos(3*a_RandValue*2 * 3.14) - 2*cos(3*a_RandValue*2 * 3.14)	-cos(4*a_RandValue*2 * 3.14))*0.03;
+
+
 	if(newTime <0.0)
 	{
 		newPos = vec3(10000,10000,10000);
