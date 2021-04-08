@@ -130,7 +130,7 @@ void Renderer::AddShader(GLuint ShaderProgram, const char* pShaderText, GLenum S
 // count = 파티클 개수
 void Renderer::CreateParticle(int count)
 {
-	int floatCount = count * (3+3+1+1+1+1) * 3 * 2;
+	int floatCount = count * (3+3+1+1+1+1+1) * 3 * 2;
 	float* particlevertices = new float[floatCount];
 	int vertexCount = count * 3 * 2;// drawarrys arg 중 vertex count에 넣어주기위해 미리 계산
 
@@ -153,20 +153,22 @@ void Renderer::CreateParticle(int count)
 		
 		float randomPeriod = 1.f;// 랜덤주기
 		float randomAmp = 1.f; // 진폭
-
+		float randValue = 0.f;
 
 		//randomValueX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
 		//randomValueY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
 		//randomValueZ = 0.f;
 
-		randomValueVX = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f; //-1~1
-		randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 2.f;
+		randomValueVX = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.1f; //-1~1
+		randomValueVY = ((float)rand() / (float)RAND_MAX - 0.5f) * 0.1f;
 		randomValueVZ = 0.f;
 
 		randomEmitTime = ((float)rand() / (float)RAND_MAX) * 10.f;
 		randomLifeTime = ((float)rand() / (float)RAND_MAX) * 2.f; //0~10;
 		randomPeriod = ((float)rand() / (float)RAND_MAX) * 10.f +1;
-		randomAmp = ((float)rand() / (float)RAND_MAX) * 0.4f - 0.2f;
+		randomAmp = ((float)rand() / (float)RAND_MAX) * 0.02f - 0.01f;
+		randValue = (float)rand() / (float)RAND_MAX;
+
 
 		//V0
 		particlevertices[index] = -particleSize / 2.f + randomValueX;
@@ -191,6 +193,9 @@ void Renderer::CreateParticle(int count)
 		particlevertices[index] = randomAmp;
 		index++;//폭
 
+		particlevertices[index] = randValue;
+		index++;//rand value
+
 		//V1
 		particlevertices[index] = particleSize / 2.f + randomValueX;
 		index++;
@@ -213,7 +218,8 @@ void Renderer::CreateParticle(int count)
 		index++;//주기
 		particlevertices[index] = randomAmp;
 		index++;//폭
-
+		particlevertices[index] = randValue;
+		index++;//rand value
 		//V2
 		particlevertices[index] = particleSize / 2.f + randomValueX;
 		index++;
@@ -237,7 +243,8 @@ void Renderer::CreateParticle(int count)
 		index++;//주기
 		particlevertices[index] = randomAmp;
 		index++;//폭
-
+		particlevertices[index] = randValue;
+		index++;//rand value
 		//V3
 		particlevertices[index] = -particleSize / 2.f + randomValueX;
 		index++;
@@ -261,7 +268,8 @@ void Renderer::CreateParticle(int count)
 		index++;//주기
 		particlevertices[index] = randomAmp;
 		index++;//폭
-
+		particlevertices[index] = randValue;
+		index++;//rand value
 		//V4
 		particlevertices[index] = particleSize / 2.f + randomValueX;
 		index++;
@@ -284,7 +292,8 @@ void Renderer::CreateParticle(int count)
 		index++;//주기
 		particlevertices[index] = randomAmp;
 		index++;//폭
-
+		particlevertices[index] = randValue;
+		index++;//rand value
 		//V5
 		particlevertices[index] = -particleSize / 2.f + randomValueX;
 		index++;
@@ -307,6 +316,8 @@ void Renderer::CreateParticle(int count)
 		index++;//주기
 		particlevertices[index] = randomAmp;
 		index++;//폭
+		particlevertices[index] = randValue;
+		index++;//rand value
 	}
 
 	glGenBuffers(1, &m_VBOManyParticle);
@@ -558,36 +569,41 @@ void Renderer::Particle()
 	glEnableVertexAttribArray(VBOLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
 	// 덩어리 나누기 ,어디서 부터 읽어옴
-	glVertexAttribPointer(VBOLocation, 3, GL_FLOAT, GL_FALSE, sizeof(float)*10, (GLvoid*)0);
+	glVertexAttribPointer(VBOLocation, 3, GL_FLOAT, GL_FALSE, sizeof(float)*11, (GLvoid*)0);
 	
 	//a_Velocity
 	GLint VBOVLocation = glGetAttribLocation(m_SolidRectShader, "a_Velocity");
 	glEnableVertexAttribArray(VBOVLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
-	glVertexAttribPointer(VBOVLocation, 3, GL_FLOAT, GL_FALSE, sizeof(float)* 10, (GLvoid*)(sizeof(float)*3));
+	glVertexAttribPointer(VBOVLocation, 3, GL_FLOAT, GL_FALSE, sizeof(float)* 11, (GLvoid*)(sizeof(float)*3));
 
 
 	GLint VBOEmitLocation = glGetAttribLocation(m_SolidRectShader, "a_EmitTime");
 	glEnableVertexAttribArray(VBOEmitLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
-	glVertexAttribPointer(VBOEmitLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 6));
+	glVertexAttribPointer(VBOEmitLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 11, (GLvoid*)(sizeof(float) * 6));
 
 	GLint VBOLifeLocation = glGetAttribLocation(m_SolidRectShader, "a_LifeTime");
 	glEnableVertexAttribArray(VBOLifeLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
-	glVertexAttribPointer(VBOLifeLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 7));
+	glVertexAttribPointer(VBOLifeLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 11 ,(GLvoid*)(sizeof(float) * 7));
 
 	GLint VBOPLocation = glGetAttribLocation(m_SolidRectShader, "a_P");
 	glEnableVertexAttribArray(VBOPLocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
-	glVertexAttribPointer(VBOPLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 8));
+	glVertexAttribPointer(VBOPLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 11, (GLvoid*)(sizeof(float) * 8));
 
 	GLint VBOALocation = glGetAttribLocation(m_SolidRectShader, "a_A");
 	glEnableVertexAttribArray(VBOALocation);
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
-	glVertexAttribPointer(VBOALocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (GLvoid*)(sizeof(float) * 9));
+	glVertexAttribPointer(VBOALocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 11, (GLvoid*)(sizeof(float) * 9));
+	
+	GLint VBORLocation = glGetAttribLocation(m_SolidRectShader, "a_RandValue");
+	glEnableVertexAttribArray(VBORLocation);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBOManyParticle);
+	glVertexAttribPointer(VBORLocation, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 11, (GLvoid*)(sizeof(float) * 10));
 
-
+	
 
 	//유니폼 값 받아오기
 	GLint UniformTime = glGetUniformLocation(shader, "u_Time");
