@@ -57,13 +57,20 @@ vec4 Radar()
 {
 	float d =length(v_Color.rg - vec2(0,0));
 	vec4 returnColor = vec4(0);
+	returnColor.a =0.2;
 	float ringRadius = mod(u_Time,0.7);
-	float radarwidth = 0.008;
+	float radarwidth = 0.015;
 
 
 	if(d>ringRadius && d<ringRadius+radarwidth)
 	{
-		returnColor =vec4(1);
+		returnColor =vec4(0.5);
+
+		float pointDistance = length(u_Points[4].xy - v_Color.rg);
+		if(pointDistance<0.05)
+		{
+			returnColor+= vec4(0.5);
+		}
 	}
 
 	return returnColor;
