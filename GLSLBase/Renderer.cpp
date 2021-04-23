@@ -708,7 +708,14 @@ void Renderer::FSSandbox()
 	glVertexAttribPointer(attribPosLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3,(GLvoid*)(0));
 
 	GLuint uniformPointLoc = glGetUniformLocation(shader, "u_Point");
-	glUniform3f(uniformPointLoc, 0.5f, 0.5f, 0.f);
+	glUniform3f(uniformPointLoc, 0.5f, 0.5f, 0.1f);
+
+	float points[] = { -0.5, -0.5, 0.01,-0.4,-0.4,0.01,-0.3,-0.3,0.01,-0.2,-0.2,0.01,-0.1,-0.1,0.01,
+	0.5, 0.5, 0.01,0.4,0.4,0.01,0.3,0.3,0.01,0.2,0.2,0.01,0.1,0.1,0.01, };
+
+	GLuint uniformPointsLoc = glGetUniformLocation(shader, "u_Points");
+	glUniform3fv(uniformPointsLoc, 10,points);
+
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 

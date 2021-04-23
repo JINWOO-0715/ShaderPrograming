@@ -9,6 +9,7 @@ const vec3 Circle = vec3(0.5f,0.5f,0.0f);
 const float PI = 3.141592;
 
 uniform vec3 u_Point;
+uniform vec3 u_Points[10];
 
 // 동심원 여러개 만드는 함수
 vec4 CenteredCircle()
@@ -35,9 +36,27 @@ vec4 IndicatePoint()
 
 }
 
+vec4 IndicatePoints()
+{
+	vec4 returnColor = vec4(0);
+	for(int i =0; i<10;i++)
+	{
+	
+		float d = length(v_Color.rg-u_Points[i].xy);
+		if(d<u_Points[i].z)
+		{
+			returnColor = vec4(1);
+		}
+	}
+	return returnColor;
+
+}
+
 void main()
 {
 
-	FragColor = CenteredCircle();
+//	FragColor = CenteredCircle();
+	//FragColor = IndicatePoint();
+	FragColor = IndicatePoints();
 	
 }
