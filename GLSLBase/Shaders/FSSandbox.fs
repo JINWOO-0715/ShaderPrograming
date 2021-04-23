@@ -10,7 +10,7 @@ const float PI = 3.141592;
 
 uniform vec3 u_Point;
 uniform vec3 u_Points[10];
-
+uniform float u_Time;
 // 동심원 여러개 만드는 함수
 vec4 CenteredCircle()
 {
@@ -52,11 +52,28 @@ vec4 IndicatePoints()
 
 }
 
+
+vec4 Radar()
+{
+	float d =length(v_Color.rg - vec2(0,0));
+	vec4 returnColor = vec4(0);
+	float ringRadius = mod(u_Time,0.7);
+	float radarwidth = 0.008;
+
+
+	if(d>ringRadius && d<ringRadius+radarwidth)
+	{
+		returnColor =vec4(1);
+	}
+
+	return returnColor;
+}
 void main()
 {
 
 //	FragColor = CenteredCircle();
 	//FragColor = IndicatePoint();
-	FragColor = IndicatePoints();
+	//FragColor = IndicatePoints();
+	FragColor  =Radar();
 	
 }
