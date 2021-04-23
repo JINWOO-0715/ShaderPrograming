@@ -696,7 +696,19 @@ void Renderer::Particle()
 
 	g_Time += 0.016f;
 }
-
+float g_points[] = {
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+	(float)((float)rand() / (float)RAND_MAX) - 0.5, (float)((float)rand() / (float)RAND_MAX) - 0.5, 0.01,
+};
 void Renderer::FSSandbox()
 {
 	GLuint shader = m_VBOFSSandboxShader;
@@ -716,12 +728,14 @@ void Renderer::FSSandbox()
 	GLuint uniformTimeLoc = glGetUniformLocation(shader, "u_Time");
 	glUniform1f(uniformTimeLoc, g_Time);
 
-	float points[] = { -0.5, -0.5, 0.01,-0.4,-0.4,0.01,-0.3,-0.3,0.01,-0.2,-0.2,0.01,-0.1,-0.1,0.01,
-	0.5, 0.5, 0.01,0.4,0.4,0.01,0.3,0.3,0.01,0.2,0.2,0.01,0.1,0.1,0.01, };
+
+
+	/*float points[] = { -0.5, -0.5, 0.01,-0.4,-0.4,0.01,-0.3,-0.3,0.01,-0.2,-0.2,0.01,-0.1,-0.1,0.01,
+	0.5, 0.5, 0.01,0.4,0.4,0.01,0.3,0.3,0.01,0.2,0.2,0.01,0.1,0.1,0.01, };*/
 
 	GLuint uniformPointsLoc = glGetUniformLocation(shader, "u_Points");
 
-	glUniform3fv(uniformPointsLoc, 10,points);
+	glUniform3fv(uniformPointsLoc, 10, g_points);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
