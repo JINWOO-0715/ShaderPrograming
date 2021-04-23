@@ -66,11 +66,18 @@ vec4 Radar()
 	{
 		returnColor =vec4(0.5);
 
-		float pointDistance = length(u_Points[4].xy - v_Color.rg);
-		if(pointDistance<0.05)
+		for (int i =0;i<10 ;i++)
 		{
-			returnColor+= vec4(0.5);
+			float pointDistance = length(u_Points[i].xy - v_Color.rg);
+			if(pointDistance<0.05)
+			{
+				pointDistance =0.05 -pointDistance;
+				pointDistance *=20;
+				returnColor+= vec4(pointDistance);
+			}
 		}
+
+
 	}
 
 	return returnColor;
