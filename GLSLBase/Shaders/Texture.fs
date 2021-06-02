@@ -6,9 +6,15 @@ uniform sampler2D u_TexSampler;
 
 in vec2 v_TexPos;
 
+const float PI = 3.141592;
+
 void main()
 {
 	//FragColor = vec4(1,0,0,1);
-	FragColor =vec4(v_TexPos,0,1);// texture(u_TexSampler,v_TexPos);
+	vec2 xy = v_TexPos;
+	float masky = xy.y * 2* PI *6; //0~2PI;
+	float sinValue = sin(masky);
+
+	FragColor = vec4(sinValue);
 
 }
