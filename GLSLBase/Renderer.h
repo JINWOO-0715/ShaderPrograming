@@ -23,6 +23,9 @@ public:
 	void Test();
 	void Particle();
 	void VSGridMeshSandbox();
+	void DrawSimpleTexture();
+
+
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -65,7 +68,9 @@ private:
 	
 	GLuint m_VBO_GridGeo= 0;
 	GLuint m_Count_GridGeo = 0;
+	
 	GLuint m_TextureCheckrBoard = 0;
-
+	GLuint m_SimpleTextureShader = 0;
+	GLuint m_VBORect_PosTex = 0;
 };
 

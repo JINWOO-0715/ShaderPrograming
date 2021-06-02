@@ -29,6 +29,8 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	m_VBOFSSandboxShader = CompileShaders("./Shaders/FSSandbox.vs", "./Shaders/FSSandbox.fs");
 	m_VSGridMeshSandboxShader = CompileShaders("./Shaders/VSGridMeshSandbox.vs", "./Shaders/VSGridMeshSandbox.fs");
 
+	m_SimpleTextureShader = CompileShaders("./Shaders/Texture.vs", "./Shaders/Texture.fs");
+
 
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -91,9 +93,24 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tempVertices2), tempVertices2, GL_STATIC_DRAW);
 	// 여기까지가 gpu에 할당. 이제 의미를 부여해야함.
 
-	
 
-	//CreateParicle
+	float tempVertices3[] = {
+	-sizeRect,-sizeRect,0.f, 0.f,0.f, // position 3, tex2
+	-sizeRect,sizeRect,0.f, 0.f,1.f,
+	 sizeRect,sizeRect,0.f, 1.f,1.f,
+	-sizeRect,-sizeRect,0.f, 0.f,0.f,
+	sizeRect,sizeRect,0.f, 1.f,1.f,
+	sizeRect,-sizeRect,0.f, 1.f,0.f,
+	};
+
+	glGenBuffers(1, &m_VBORect_PosTex);
+	// 메모리 버퍼 바인드
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect_PosTex);
+	// 바인드된 vbo에 할당.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tempVertices3), tempVertices3, GL_STATIC_DRAW);
+	// 여기까지가 gpu에 할당. 이제 의미를 부여해야함.
+
+//CreateParicle
 	CreateParticle(1000);
 	CreateGridGeometry();
 
@@ -833,5 +850,26 @@ void Renderer::VSGridMeshSandbox()
 	glDrawArrays(GL_LINES, 0, m_Count_GridGeo);
 	g_Time += 0.016f;
 
+
+}
+
+void Renderer::DrawSimpleTexture()
+{
+	GLuint shader = m_SimpleTextureShader;
+	glUseProgram(shader); //shader program select
+
+	GLuint attribPosLoc = glGetAttribLocation(shader, "a_Position");
+	glEnableVertexAttribArray(attribPosLoc);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect_PosTex);
+	glVertexAttribPointer(attribPosLoc, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(0));
+
+	GLuint attribTexPosLoc = glGetAttribLocation(shader, "a_TexPos");
+	glEnableVertexAttribArray(attribTexPosLoc);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect_PosTex);
+	glVertexAttribPointer(attribTexPosLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(sizeof(float)*3));
+
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	g_Time += 0.016f;
 
 }
