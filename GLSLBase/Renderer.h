@@ -22,7 +22,7 @@ public:
 	   
 	void Test();
 	void Particle();
-	void FSSandbox();
+	void VSGridMeshSandbox();
 private:
 	void Initialize(int windowSizeX, int windowSizeY);
 	bool ReadFile(char* filename, std::string *target);
@@ -32,7 +32,10 @@ private:
 	unsigned char * Renderer::loadBMPRaw(const char * imagepath, unsigned int& outWidth, unsigned int& outHeight);
 	void CreateParticle(int count);
 	bool m_Initialized = false;
-	
+	void CreateGridGeometry();
+	void CreateTextures();
+
+
 	unsigned int m_WindowSizeX = 0;
 	unsigned int m_WindowSizeY = 0;
 
@@ -52,7 +55,7 @@ private:
 	GLuint m_VBORect = 0;
 	GLuint m_SolidRectShader = 0;
 	GLuint m_VBOFSSandboxShader = 0;
-
+	GLuint m_VSGridMeshSandboxShader = 0;
 
 	GLuint m_VBO = 0;
 	GLuint m_VBO1 = 0;
@@ -60,6 +63,9 @@ private:
 	GLuint m_VBOManyParticleCount = 0;
 	GLuint m_VBOFSSandBox = 0;
 	
+	GLuint m_VBO_GridGeo= 0;
+	GLuint m_Count_GridGeo = 0;
+	GLuint m_TextureCheckrBoard = 0;
 
 };
 
