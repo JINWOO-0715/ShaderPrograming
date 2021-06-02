@@ -12,9 +12,15 @@ void main()
 {
 	//FragColor = vec4(1,0,0,1);
 	vec2 xy = v_TexPos;
-	float masky = xy.y * 2* PI *6; //0~2PI;
-	float sinValue = sin(masky);
+	float maskY = xy.y * 2* PI *6; //0~2PI;
+	float sinValueY = sin(maskY);
+	sinValueY = pow (sinValueY,10);
 
-	FragColor = vec4(sinValue);
+	float maskX = xy.x * 2* PI *6; //0~2PI;
+	float sinValueX = sin(maskX);
+	sinValueX = pow (sinValueX,10);
+	//ceil ÂðÇÏ°Ô ¿Ã¸² FragColor = vec4(ceil(sinValueX+sinValueY));
+	//max ¹æÃæ¸Á
+	FragColor = vec4(max(sinValueX,sinValueY));
 
 }
