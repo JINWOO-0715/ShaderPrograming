@@ -31,6 +31,10 @@ void Renderer::Initialize(int windowSizeX, int windowSizeY)
 
 	m_SimpleTextureShader = CompileShaders("./Shaders/Texture.vs", "./Shaders/Texture.fs");
 
+	//Load Texture
+
+	m_TextureRGB = CreatePngTexture("./Texture/RGB.png");
+
 
 	//Create VBOs
 	CreateVertexBufferObjects();
@@ -868,6 +872,14 @@ void Renderer::DrawSimpleTexture()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBORect_PosTex);
 	glVertexAttribPointer(attribTexPosLoc, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (GLvoid*)(sizeof(float)*3));
 
+	GLuint uniformText = glGetUniformLocation(shader, "u_TexSampler");
+	glUniform1i(uniformText, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_TextureRGB);
+
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_TextureCheckrBoard);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	g_Time += 0.016f;

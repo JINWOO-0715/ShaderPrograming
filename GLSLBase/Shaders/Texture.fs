@@ -8,19 +8,21 @@ in vec2 v_TexPos;
 
 const float PI = 3.141592;
 
+vec4 P1()
+{
+	vec2 newTex = v_TexPos;
+	newTex.y =abs(newTex.y-0.5)*2;
+	vec4 retrunColor = texture(u_TexSampler,newTex);
+
+	return retrunColor;
+}
+
 void main()
 {
-	//FragColor = vec4(1,0,0,1);
-	vec2 xy = v_TexPos;
-	float maskY = xy.y * 2* PI *6; //0~2PI;
-	float sinValueY = sin(maskY);
-	sinValueY = pow (sinValueY,10);
 
-	float maskX = xy.x * 2* PI *6; //0~2PI;
-	float sinValueX = sin(maskX);
-	sinValueX = pow (sinValueX,10);
-	//ceil ÂðÇÏ°Ô ¿Ã¸² FragColor = vec4(ceil(sinValueX+sinValueY));
-	//max ¹æÃæ¸Á
-	FragColor = vec4(max(sinValueX,sinValueY));
 
+	FragColor =P1();
+	//FragColor = texture(u_TexSampler,v_TexPos);
 }
+
+
