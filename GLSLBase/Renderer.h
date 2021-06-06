@@ -37,7 +37,7 @@ private:
 	bool m_Initialized = false;
 	void CreateGridGeometry();
 	void CreateTextures();
-
+	GLuint CreateFBO(int sx, int sy, GLuint* tex, GLuint* depthTex);
 
 	unsigned int m_WindowSizeX = 0;
 	unsigned int m_WindowSizeY = 0;
@@ -73,5 +73,19 @@ private:
 	GLuint m_TextureRGB = 0;
 	GLuint m_SimpleTextureShader = 0;
 	GLuint m_VBORect_PosTex = 0;
+
+	GLuint m_TextureID0 = 0;
+	GLuint m_TextureID1 = 0;
+	GLuint m_TextureID2 = 0;
+	GLuint m_TextureID3 = 0;
+	GLuint m_TextureID4 = 0;
+	GLuint m_TextureID5 = 0;
+
+	GLuint m_TextureIDTotal = 0;
+
+	GLuint m_FBO_0 =0;
+	GLuint m_FBOTexture_0 = 0;
+	GLuint m_FBODepth_0 = 0;
+
 };
 
