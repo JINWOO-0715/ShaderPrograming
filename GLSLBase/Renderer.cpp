@@ -1106,6 +1106,7 @@ GLuint Renderer::CreateFBO(int sx, int sy, GLuint* tex, GLuint* depthTex)
 
 void Renderer::DrawSimpleTexture()
 {
+
 	GLuint shader = m_SimpleTextureShader;
 	glUseProgram(shader); //shader program select
 
